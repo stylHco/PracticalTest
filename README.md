@@ -1,30 +1,35 @@
 # PracticalTest
 
-this project was created using .Net 8.0
+This project is built with **.NET 8.0** and provides a set of RESTful Web APIs for managing **Employees** and **Departments**.
 
-The project contains WEB APIs to make CRUD operations for Employees and Departments.
-Each employee belongs to one department
+Each employee is associated with one department.
 
-Additional to the CRUD operations the WEB APIs offers the following:
- 
--  Retrieve all employees belonging to a department based on Department ID.
--  Retrieve the top N employees (N is given) with Highest Salary.
--  Retrieve the average salary of employees in a specific department, return the departmentId and the average salary.
--  Retrieve employees whose salaries fall within a specified range.
+---
 
-***
+## Features
 
-# The Set-Up 
+In addition to full CRUD support for employees and departments, the API provides:
 
-For this Scenario I am using Rider as the preferred IDE.
-You can use any IDE you want. Also, I am using Microsoft SQL server running on docker container
+- Get all employees in a specific department
+- Get the **Top N** employees with the highest salary (`top` is user-defined)
+- Get the **average salary** of employees in a department (returns department ID and average)
+- Get all employees whose **salaries are within a specified range**
 
+---
 
-You need to have .Net 8.0 runtime to be able to run it  or .Net SDK to be able to 
-make changes in the code and also run it. For more info use this link: https://dotnet.microsoft.com/en-us/
+# The Set-Up Instructions
 
+> **IDE Used:** Rider (but any .NET capable IDE works such as Visual Studio, VS Code)
 
+> **Database:** Microsoft SQL Server
 
+### Requirements
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- SQL Server (LocalDB, Docker, or full instance)
+- EF Core CLI (`dotnet ef` installed globally)
+
+---
 - After cloning the project locally open the .sln file in your preferred IDE
 
 
@@ -41,14 +46,28 @@ In this file we need to specify the connection string for teh database. The fina
 }
 ```
 
-# Database 
+Alternatively you can use user secrets CLI 
+```bash
+dotnet user-secrets init
+dotnet user-secrets set   "ConnectionStrings:DefaultConnection": "User Id=SA;Password=Password1234;Server=localhost;Database=PracticalDB;Encrypt=False;"
+
+```
+
+** You can replace the Database name and Database connection method to fit your application. For example in `windows` you have windows auth and the connection string can be motified like this:
+
+```bash
+{
+  "ConnectionStrings:DefaultConnection": "Server=localhost;Database=PracticalDB;Trusted_Connection=True;Encrypt=False;"
+}
+```
+
+# Populate the Database 
 
 You can open a terminal in a new separate window or using the IDE and navigate to the project root folder using `cd` commands
 
 Once you are in the root of the project you run the following command:
 
-bash
-```
+``` bash
 dotnet ef database update
 ```
 
@@ -57,13 +76,13 @@ If you have correctly added the connection string the database should be created
 
 # Add Data to the Database (Optional)
 
-In case you want to add some dummy data to the database and see how works I made a simple SQL file that cou can find under `Scripts/DataGeneration.sql`.
+In case you want to add some dummy data to the database and see how works I made a simple SQL file that you can find under `Scripts/DataGeneration.sql`.
 You can run this sql file in you preferred Management application (SSMS, Azure Data Studio) and automatically will generate a few data for Departments and Employees.
 
 # Rider
 
 Make sure that the run/debug widget `top/right` (assuming default UI layout)
-is populated with 3 options:
+is populated with 2 options:
 
 * `Practical: http`
 * `Practical: https`
@@ -74,9 +93,16 @@ is populated with 3 options:
 
 Open the run/debug widget dropdown, click **run** `Practical:http`. It will be running on its own and automatically will open a browser showing the Swagger UI.
 
-** In case the browser does not open automatically you can navigate under http://localhost:`{The port soecified under run tap in the IDE}`
+** In case the browser does not open automatically you can navigate under http://localhost: `{The port specified under run tap in the IDE}`
 
 ![img_3.png](img_3.png)
+
+Alternatively, you can just type the following command on terminal (under root directory) to run it and use ^C to terminate
+
+```bash
+dotnet run
+```
+
 
 # Using the Project
 
@@ -84,3 +110,5 @@ You can navigate and see all the available functions and run them using the Swag
 
 ![img_2.png](img_2.png)
 ![img_4.png](img_4.png)
+
+
